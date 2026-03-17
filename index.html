@@ -23,12 +23,24 @@
 </head>
 <body>
   <div id="root"></div>
-  <script type="text/babel">
+  26
     const { useState } = React;
     const { ChevronRight, X, Star, MapPin, Users, TrendingUp, Package, Calendar } = window.lucide;
+ data-type="module"
 
-
-const RegionalDashboard = () => {
+    // アプリケーション初期化を確実にするためにDOMContentLoadedイベントを待つ
+        window.addEventListener('DOMContentLoaded', function() {
+                // Lucideが読み込まれるまで待機
+                const initApp = () => {
+                          if (typeof window.lucide === 'undefined') {
+                                      setTimeout(initApp, 50);
+                                      return;
+                          }
+                          startApp();
+                };
+                
+                const startApp = () => {
+                  const RegionalDashboard = () => {
   const [selectedRegion, setSelectedRegion] = useState(null);
   const [selectedArea, setSelectedArea] = useState(null);
   const [viewPeriod, setViewPeriod] = useState('monthly'); // monthly, quarterly, yearly
@@ -1310,6 +1322,10 @@ const RegionalDashboard = () => {
 
 
     ReactDOM.render(<RegionalDashboard />, document.getElementById('root'));
+            }; // startApp関数を閉じる
+
+            initApp(); // アプリケーション初期化開始
+          }); // DOMContentLoadedイベントリスナーを閉じる
   </script>
 </body>
 </html>
